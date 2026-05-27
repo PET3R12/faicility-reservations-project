@@ -46,9 +46,7 @@ class User:
             manager.create_reservation(reservation)
             return reservation
         except (InvalidReservationDateError, FacilityUnavailableError) as e:
-            logger.error(
-                f"Unable to create reservation for '{self.username}': {e}"
-            )
+            logger.error(f"Unable to create reservation for '{self.username}': {e}")
             return None
 
     def add_review(
