@@ -1,41 +1,129 @@
-# Projekt na przedmiot "Przedmiot Fakultatywny"
-## **Temat**: System rezerwacji hoteli
-## Instalacja zależności:
-- zależności można zainstalować na podstawie pliku `requirements.txt` komendą:
-```bash
+<a id="readme-top"></a>
+<div align="center">
+
+  <h3 align="center">Facility Reservation System</h3>
+
+  <p align="center">
+    An object-oriented hotel reservation system focused on Clean Code and automated testing/
+    <br />
+  </p>
+</div>
+
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#core-features--logic">Core Features & Logic</a></li>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#testing">Testing</a></li>
+    <li><a href="#ci--code-quality">CI & Code Quality</a></li>
+  </ol>
+</details>
+
+## About The Project
+
+This individual academic project was developed for the *Przedmiot Fakultatywny* course at *University of Warmia and Mazury*. The primary focus of this application is applying software engineering best practices, writing highly maintainable Python code, and implementing comprehensive automated testing. 
+
+The application serves as a backend logic simulator for managing facility reservations, handling user interactions, validation rules, and file-based state management.
+
+### Core Features & Logic
+
+The system is built upon a robust Object-Oriented Architecture, utilizing several key classes:
+* **Core Entities:** `User`, `Reservation`, `Facility`, `FacilityReview`.
+* **Managers & Helpers:** `ReservationManager`, `Contact`, `PhoneNumber`.
+* **Error Handling:** Custom `Exception` classes for precise validation feedback.
+
+**Business Rules:**
+1. **Reservations:** A `User` can create a `Reservation` only if strict conditions are met:
+   * The facility must be available (no overlapping bookings).
+   * The reservation date cannot be in the past.
+   * The maximum allowed duration for a single reservation is 1 month.
+2. **Reviews:** Users can leave a `FacilityReview` containing an integer rating from 1 to 5.
+3. **State Management:** The `ReservationManager` handles data persistence by reading and validating state from `data_reservations.json` before confirming new bookings.
+4. **Logging:** Application events and errors are seamlessly logged using `loguru` and stored in `logs/app.log`.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Built With
+
+* [![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+* [![Pytest](https://img.shields.io/badge/Pytest-0A9EDC?style=for-the-badge&logo=pytest&logoColor=white)](https://docs.pytest.org/)
+* [![Pytest-Cov](https://img.shields.io/badge/pytest--cov-0A9EDC?style=for-the-badge)](https://pytest-cov.readthedocs.io/en/latest/)
+* [![Pytest-BDD](https://img.shields.io/badge/pytest--bdd-0A9EDC?style=for-the-badge)](https://github.com/pytest-dev/pytest-bdd)
+* [![Loguru](https://img.shields.io/badge/Loguru-2596be?style=for-the-badge)](https://github.com/Delgan/loguru)
+* [![uv](https://img.shields.io/badge/uv-DE5D83?style=for-the-badge)](https://github.com/astral-sh/uv)
+* [![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)](https://github.com/features/actions)
+* [![Black](https://img.shields.io/badge/code%20style-black-000000.svg?style=for-the-badge)](https://github.com/psf/black)
+* [![Flake8](https://img.shields.io/badge/Flake8-2b3d36?style=for-the-badge)](https://flake8.pycqa.org/en/latest/)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Getting Started
+
+Follow these steps to set up the project locally.
+
+### Installation
+
+You can install the required dependencies using standard `pip` or the lightning-fast `uv` package manager.
+
+**Option 1: Using pip**
+```sh
 pip install -r requirements.txt
 ```
- - podczas pisania projektu używałem narzędzia [uv](https://docs.astral.sh/uv/), więc można też zainstalować zależności za pomocą komendy:
- ```bash
- uv sync
- ```
-## Aplikacja:
-- Główne klasy:
-	- `User` 
-	- `Reservation`
-	- `Facility`
-	- `FacilityReview`
-- Klasy pośrednie typu: 
-	- `Contact`
-	- `ReservationManager`
-	- `PhoneNumber`
-	- Klasy typu `Exception`
-- Działanie aplikacji:
-	- `User` może tworzyć `Reservations`, które muszą spełniać określone warunki (dany obiekt nie może mieć już rezerwacji w danym przedziale czasowym, nie można zrobić rezerwacji w przeszłości i rezerwacja nie może być dłuższa niż miesiąc)
-	- `User` może też dodawać `FacilityReview` dla danego obiektu. Recenzja zawiera ocenę liczbową, która musi być liczbą całkowitą w przedziale od 1 do 5
-	- `ReservationManager` sczytuje informacje z `data_reservations.json` i weryfikuje, czy obiekt nie jest zarezerwowany i jeżeli nie jest to dodaje do listy rezerwacji tą rezerwację.
-- Przykładowe użycie aplikacji jest w pliku `main.py` - trzeba go uruchomić
-	- w pliku `data_reservations.json` jest zapisany wynik wywołania `main.py`
-- Aplikacja wypisuje komunikaty przez logi za pomocą biblioteki `loguru`, i zapisuje je w pliku `logs/app.log`
 
-## Testy:
-Raport w formacie html można utworzyć komendą:
-```bash
-uv run pytest tests/ --cov=src --cov-report=html
+**Option 2: Using uv (Recommended)**
+```sh
+uv sync
 ```
-lub przez uv:
-```bash
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Usage
+
+To execute the application and see the simulated reservation process, run the main script:
+
+```sh
+python main.py
+```
+
+* **Output Data:** The result of the execution will be automatically saved and updated in `data_reservations.json`.
+* **Logs:** Check the `logs/app.log` file to view detailed diagnostic messages and event history generated by Loguru.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Testing
+
+The project is thoroughly tested using `pytest` and `unittest` paradigms to ensure logical correctness. 
+
+To run the test suite and generate an HTML coverage report, execute:
+
+**Using standard pytest:**
+```sh
 pytest tests/ --cov=src --cov-report=html
 ```
-## Workflows
-Dałem testy `black` i `flake8` aby poprawiało format kodu i bot commituje poprawiony jak nie jest
+
+**Using uv:**
+```sh
+uv run pytest tests/ --cov=src --cov-report=html
+```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## CI & Code Quality
+
+To maintain strict clean code standards, this repository utilizes **GitHub Actions Workflows**. 
+
+The CI pipeline automatically runs formatting and linting tools (`Black` and `Flake8`). If the pushed code does not meet the formatting standards, a bot will automatically fix the formatting and commit the changes directly to the branch.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
